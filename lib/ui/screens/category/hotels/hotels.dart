@@ -15,34 +15,39 @@ class HotelsScreen extends StatefulWidget {
 class _HotelsScreenState extends State<HotelsScreen> {
 HotelCubit cubit= getIt<HotelCubit>();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Hotels')),
-      body: BlocBuilder<HotelCubit, HotelState>(
-        bloc: cubit..fetchHotels(),
-        builder: (context, state) {
-          if (state is HotelLoading) {
-            showLoading(context);
-          } else if (state is HotelSuccess) {
-            hideLoading(context);
-            return ListView.builder(
-              itemCount: state.hotels.length,
-              itemBuilder: (context, index) {
-                final hotel = state.hotels[index];
-                return ListTile(
-                  title: Text(hotel.name),
-                  subtitle: Text(hotel.location),
-                  trailing: Text('${hotel.price} EGP/night'),
-                );
-              },
-            );
-          } else if (state is HotelError) {
-            hideLoading(context);
-            ErrorWidget(state.failures.errorMessage);
-          }
-          return const Center(child: Text('No data'));
-        },
+      body: BlocProvider(
+        create: (BuildContext context) => cubit..fetchHotels(),
+        child: BlocConsumer<HotelCubit, HotelState>(
+          listener: (context, state){
+            if(state is HotelLoading){
+              showLoading(context);
+            }
+          },
+          builder: (context, state) {
+            if (state is HotelSuccess) {
+              return ListView.builder(
+                itemCount: state.hotels.length,
+                itemBuilder: (context, index) {
+                  final hotel = state.hotels[index];
+                  return ListTile(
+                    title: Text(hotel.name),
+                    subtitle: Text(hotel.location),
+                    trailing: Text('${hotel.price} EGP/night'),
+                  );
+                },
+              );
+            } else if (state is HotelError) {
+              hideLoading(context);
+              ErrorWidget(state.failures.errorMessage);
+            }
+            return const Center(child: Text('No data'));
+          },
+        ),
       ),
     );
   }

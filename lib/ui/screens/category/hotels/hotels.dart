@@ -35,14 +35,13 @@ HotelCubit cubit= getIt<HotelCubit>();
                 itemBuilder: (context, index) {
                   final hotel = state.hotels[index];
                   return ListTile(
-                    title: Text(hotel.name),
-                    subtitle: Text(hotel.location),
-                    trailing: Text('${hotel.price} EGP/night'),
+                    title: Text(hotel.name!),
+                    subtitle: Text(hotel.location!),
+                    trailing: Text('${hotel.price!} EGP/night'),
                   );
                 },
               );
             } else if (state is HotelError) {
-              hideLoading(context);
               ErrorWidget(state.failures.errorMessage);
             }
             return const Center(child: Text('No data'));

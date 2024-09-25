@@ -22,6 +22,7 @@ class HotelRepositoryImpl extends HotelRepository {
         final hotels = await hotelRemoteDataSource.getHotels();
         return Right(hotels.right);
       } catch (e) {
+        print("Repository Error ===========================${e.toString()}");
         return Left(Failures(e.toString()));
       }
     } else {

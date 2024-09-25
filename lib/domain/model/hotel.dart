@@ -1,10 +1,10 @@
 class Hotel {
   static const String collectionName = "hotels";
-  final String id;
-  final String name;
-  final String description;
-  final String location;
-  final double price;
+  final String? id;
+  final String? name;
+  final String? description;
+  final String? location;
+  final num? price;
   Hotel(
       {required this.id,
       required this.name,

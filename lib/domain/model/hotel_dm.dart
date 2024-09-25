@@ -20,13 +20,13 @@ class HotelDM extends Hotel {
             price: price,
             location: location);
 
-  factory HotelDM.fromFirestore(Map<String, dynamic> json) {
+  factory HotelDM.fromFirestore(Map<String, dynamic>? json,String id) {
     return HotelDM(
-      id: json["id"],
-      name: json["name"],
-      description: json["description"],
-      price: json["price"],
-      location: json["location"],
+      id: json?["id"],
+      name: json?["name"],
+      description: json?["description"],
+      price: json?["price"],
+      location: json?["location"],
     );
   }
 

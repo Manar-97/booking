@@ -22,11 +22,12 @@ class HotelRemoteDataSourceImpl extends HotelRemoteDataSource {
           await firestore.collection(Hotel.collectionName).get();
       final hotels = snapshot.docs
           .map((doc) =>
-              HotelDM.fromFirestore(doc.data() as Map<String, dynamic>))
+              HotelDM.fromFirestore(doc.data() as Map<String, dynamic>, doc.id))
           .toList();
       return Right(hotels);
     } catch (e) {
-      throw Left(Failures(e.toString()));
+      print("Data Source Error===========================${e.toString()}");
+      return Left(Failures(e.toString()));
     }
   }
 }

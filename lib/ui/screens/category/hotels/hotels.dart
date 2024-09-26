@@ -4,17 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../di/di.dart';
 import 'hotel_cubit.dart';
 
-class HotelsScreen extends StatefulWidget {
-  const HotelsScreen({super.key});
+class HotelsScreen extends StatelessWidget {
+  HotelsScreen({super.key});
   static const String routeName = "hotels";
 
-  @override
-  State<HotelsScreen> createState() => _HotelsScreenState();
-}
-
-class _HotelsScreenState extends State<HotelsScreen> {
-HotelCubit cubit= getIt<HotelCubit>();
-
+  HotelCubit cubit = getIt.get<HotelCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +17,13 @@ HotelCubit cubit= getIt<HotelCubit>();
       body: BlocProvider(
         create: (BuildContext context) => cubit..fetchHotels(),
         child: BlocConsumer<HotelCubit, HotelState>(
-          listener: (context, state){
-            if(state is HotelLoading){
+          listener: (context, state) {
+            try{if (state is HotelLoading) {
               showLoading(context);
-            }
+            }}
+                catch(e){
+              print("Error==============${e.toString()}");
+                }
           },
           builder: (context, state) {
             if (state is HotelSuccess) {
@@ -36,15 +33,17 @@ HotelCubit cubit= getIt<HotelCubit>();
                   final hotel = state.hotels[index];
                   return ListTile(
                     title: Text(hotel.name!),
-                    subtitle: Text(hotel.location!),
+                    subtitle: Text(hotel.description!),
                     trailing: Text('${hotel.price!} EGP/night'),
                   );
                 },
               );
             } else if (state is HotelError) {
-              ErrorWidget(state.failures.errorMessage);
+              ErrorWidget(Center(child: Text(state.failures.errorMessage)));
+            } else {
+              return const Center(child: Text('No data'));
             }
-            return const Center(child: Text('No data'));
+            return const Text("======================Error");
           },
         ),
       ),

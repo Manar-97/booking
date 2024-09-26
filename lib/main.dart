@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           LoginScreen.routeName: (_) => const LoginScreen(),
           RegisterScreen.routeName: (_) => const RegisterScreen(),
           HomeScreen.routeName: (_) => const HomeScreen(),
-          HotelsScreen.routeName: (_) => const HotelsScreen()
+          HotelsScreen.routeName: (_) => HotelsScreen()
         },
         initialRoute: HotelsScreen.routeName,
       ),

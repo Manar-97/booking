@@ -1,32 +1,27 @@
-import 'hotel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HotelDM extends Hotel {
-  // static const String collectionName = "hotels";
-  // String? id;
-  // String? name;
-  // String? description;
-  // String? location;
-  // double? price;
+class HotelDM {
+  static const String collectionName = "hotels";
+  final String? id;
+  final String? name;
+  final String? description;
+  final String? location;
+  final num? price;
   HotelDM(
-      {required String name,
-      required String description,
-      required double price,
-      required String location,
-      required String id})
-      : super(
-            id: id,
-            name: name,
-            description: description,
-            price: price,
-            location: location);
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.price,
+      required this.location});
 
-  factory HotelDM.fromFirestore(Map<String, dynamic>? json,String id) {
+  factory HotelDM.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
     return HotelDM(
-      id: json?["id"],
-      name: json?["name"],
-      description: json?["description"],
-      price: json?["price"],
-      location: json?["location"],
+      id: doc.id,
+      name: data['name'] ?? '',
+      description: data['description'] ?? '',
+      location: data['location'] ?? '',
+      price: data['price'] ?? 0,
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:booking/ui/widgets/failures.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import '../../model/hotel.dart';
 import '../../model/hotel_dm.dart';
 import '../../repositories/hotels/hotel_repository.dart';
 
@@ -28,7 +27,7 @@ class GetHotelsUseCase {
   final HotelRepository repository;
   GetHotelsUseCase(this.repository);
 
-  Future<Either<Failures, List<Hotel>>> callHotels() {
+  Future<Either<Failures, List<HotelDM>>> callHotels() {
     return repository.getHotels();
   }
 }

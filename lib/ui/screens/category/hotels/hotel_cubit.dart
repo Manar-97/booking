@@ -1,8 +1,6 @@
 import 'package:booking/ui/widgets/failures.dart';
-import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../domain/model/hotel.dart';
 import '../../../../domain/model/hotel_dm.dart';
 import '../../../../domain/usecases/hotels/hotels_usecase.dart';
 
@@ -30,7 +28,7 @@ class HotelInitial extends HotelState {}
 class HotelLoading extends HotelState {}
 
 class HotelSuccess extends HotelState {
-  final List<Hotel> hotels;
+  final List<HotelDM> hotels;
   HotelSuccess(this.hotels);
 }
 

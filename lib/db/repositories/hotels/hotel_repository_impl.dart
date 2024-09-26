@@ -4,7 +4,6 @@ import 'package:booking/ui/widgets/failures.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import '../../../domain/model/hotel.dart';
 import '../../../domain/repositories/hotels/hotel_repository.dart';
 
 @Injectable(as: HotelRepository)
@@ -16,7 +15,7 @@ class HotelRepositoryImpl extends HotelRepository {
       this.hotelRemoteDataSource, this.internetConnectionChecker);
 
   @override
-  Future<Either<Failures, List<Hotel>>> getHotels() async {
+  Future<Either<Failures, List<HotelDM>>> getHotels() async {
     if (await internetConnectionChecker.hasConnection) {
       try {
         final hotels = await hotelRemoteDataSource.getHotels();
